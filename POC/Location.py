@@ -22,11 +22,13 @@ class Location:
 
     def get_location_string(self):
         if self.place_id is not None:
-            return f'origins={self.place_id}'
+            return f'{self.place_id}'
         if self.latitude is not None and self.longitude is not None:
-            return f'origins={self.latitude}%2C{self.longitude}'
+            return f'{self.latitude}%2C{self.longitude}'
+        if self.addition is not None:
+            return f'{self.house_number}%2B{self.addition}%2B{self._url_encode_street_name()}%2B{self.city}'
         else:
-            return f'origins={self.house_number}%2B{self.addition}%2B{self.street_name}%2B{self.city}'
+            return f'{self.house_number}%2B{self._url_encode_street_name()}%2B{self.city}'
 
     def _url_encode_street_name(self):
         return self.street_name.replace(' ', '%20')
